@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SIRURI DE CARACTERE</title>
+<style>
+  body {
+    margin: 0;
+    padding: 20px 40px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    background: #1b2a1b; 
+    color: #c4d1c4; 
+    display: flex;
+    justify-content: center;
+  }
+  main {
+    max-width: 900px;
+    width: 100%;
+  }
+  h1 {
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #a1bda1; 
+    font-size: 22px;
+    user-select: none;
+  }
+  pre {
+    background-color: #2c432c; 
+    border-left: 5px solid #4a774a;
+    padding: 10px 15px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    color: #d0e0d0; 
+  }
+  .problema {
+    margin-bottom: 50px;
+  }
+  .enunt {
+    font-weight: 600;
+    margin-bottom: 8px;
+    white-space: pre-wrap;
+    color: #b5ccb5; 
+  }
+  .exemplu {
+    background-color: #2c432c;
+    border: 1.5px solid #4a774a;
+    padding: 10px 15px;
+    margin-top: 5px;
+    font-style: italic;
+    white-space: pre-wrap;
+    border-radius: 6px;
+    color: #a8c1a8; 
+  }
+  #header-info {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(10, 20, 10, 0.8);
+    color: #b3d6b3;
+    font-size: 13px;
+    padding: 5px 15px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    z-index: 1000;
+    user-select: none;
+    transition: opacity 0.3s ease;
+  }
+</style>
+<script>
+  window.addEventListener('scroll', () => {
+    const header = document.getElementById('header-info');
+    if(window.scrollY > 10) {
+      header.style.opacity = '0';
+      header.style.pointerEvents = 'none';
+    } else {
+      header.style.opacity = '1';
+      header.style.pointerEvents = 'auto';
+    }
+  });
+</script>
+</head>
+<body>
+
+<div id="header-info">
+  Baboi Luca Mihail<br />
+  Clasa a XI-a A
+</div>
+
+<main>
+  <h1>SIRURI DE CARACTERE</h1>
+
+  <div class="problema">
+    <div class="enunt">
+1) Se citeşte un şir de caractere s. Să se afişeze pe ecran poziţia pe care se află primul spaţiu în şirul de caractere. În cazul în care nu conţine spaţii, se va afişa "NU EXISTA".
+    </div>
+    <div class="exemplu">
+ex: 1. s = "floare" => Nu exista
+    2. s = "floare roz" =>  6
+    </div>
+    <pre>
+#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int main()
+{
+	char s[256];
+	int i = 0;
+	cin.get(s, 256);
+	while(s[i] != ' ')
+		i++;
+	if(i &lt; strlen(s))
+		cout &lt;&lt; i;
+	else
+		cout &lt;&lt; "NU EXISTA";
+
+	return 0;
+}
+    </pre>
+  </div>
+
+  <div class="problema">
+    <div class="enunt">
+2) Se dă un şir de cel mult 20 caractere ce conţine numai litere mici ale alfabetului englez. Să se afişeze şirul obţinut prin eliminarea din șir a fiecărei vocale.
+    </div>
+    <div class="exemplu">
+ex:  s = "lalea" => ll
+    </div>
+    <pre>
+#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int main()
+{
+	char s[21];
+	cin &gt;&gt; s;
+	for(int i = 0; i &lt; strlen(s); i++)
+		if(strchr("aeiou",s[i]))
+		{
+			strcpy(s+i, s+i+1);
+			i--;
+		}
+	cout &lt;&lt; s;
+
+	return 0;
+}
+    </pre>
+  </div>
+
+  <div class="problema">
+    <div class="enunt">
+3) Se dă un şir format din cel mult 100 de caractere – litere mici ale alfabetului englez şi spaţii. Să se modifice acest şir prin dublarea fiecărei consoane.
+    </div>
+    <div class="exemplu">
+ex: s = "am o pisica" => amm o ppissicca
+    </div>
+    <pre>
+#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int main()
+{
+	char s[201], aux[201];
+	cin.getline (s, 101);
+	for (int i = strlen (s) - 1; i &gt;= 0; i--)
+		if (strchr ("aeiou", s[i]) == 0)
+		{
+			strcpy (aux, s + i);
+			strcpy (s + i + 1, aux);
+		}
+	cout &lt;&lt; s;
+
+	return 0;
+}
+    </pre>
+  </div>
+
+  <div class="problema">
+    <div class="enunt">
+4) Se citește un șir de caractere de la tastatură, format din cuvinte separate prin spațiu. Să se afișeze numărul cuvintelor care au un număr par de litere.
+    </div>
+    <div class="exemplu">
+ex: s = "El are 10 fructe exotice" => 3
+    </div>
+    <pre>
+#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int main()
+{
+	char s[101], *p;
+	int nr = 0;
+	cin.get(s,101);
+	p = strtok(s, " ");
+	while(p) {
+		if (strlen(p) % 2 == 0)
+			nr++;
+		p = strtok(NULL, " ");
+	}
+	cout &lt;&lt; nr;
+	
+	return 0;
+}
+    </pre>
+  </div>
+
+  <div class="problema">
+    <div class="enunt">
+5) Se dau două şiruri de caractere s şi t. Să se elimine din s toate apariţiile lui t.
+    </div>
+    <div class="exemplu">
+ex: Marian este belgian iar Fabian este italian
+    ian                                           => Mar este belg iar Fab este ital                      
+    </div>
+    <pre>
+#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+using namespace std;
+
+int main ()
+{
+  char s[256], t[256], aux[256];
+  cin.getline (s, 256);
+  cin.getline (t, 256);
+  char *p = strstr (s, t);
+  while (p)
+    {
+      strcpy (aux, p + strlen (t));
+      strcpy (p, aux);
+      p = strstr (s, t);
+    }
+  cout &lt;&lt; s;
+
+  return 0;
+}
+    </pre>
+  </div>
+
+  <div class="problema">
+    <div class="enunt">
+6) Se dă un şir s, format dintr-un nume şi prenume, separate print-un spaţiu. Să se construiască şirul t care conţine al doilea cuvâant din şirul s, urmat de "2025".
+    </div>
+    <div class="exemplu">
+ex: Ioan Slavici => Slavici2025
+    </div>
+    <pre>
+#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int main()
+{
+	char s[51], t[51], *p;
+	cin.get(s,51);
+	p=strchr(s, ' ');
+	strcpy(t, p + 1);
+	strcat(t, "2025");
+	cout &lt;&lt; t;
+
+	return 0;
+}
+    </pre>
+  </div>
+
+  <div class="problema">
+    <div class="enunt">
+7) Se citește un șir de caractere format doar din litere mici ale alfabetului englez, fără spații. Să se afișeze poziția tuturor vocalelor din șir. Apoi, să se înlocuiască toate vocalele din șir cu caracterul '*' și să se afișeze șirul rezultat. Dacă șirul nu conține nicio vocală, se va afișa -1, iar șirul se va afișa nemodificat.
+    </div>
+    <div class="exemplu">
+ex: 1.  program => 2 5 pr*gr*m
+    2.  DVD => -1 DVD
+    </div>
+    <pre>
+#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int main()
+{
+	char s[101], *p;
+	int nr = 0;
+	cin &gt;&gt; s;
+	for (int i = 0; i &lt; strlen(s); i++) {
+		if (strchr("aeiou", s[i])) {
+			p = s + i;
+			cout &lt;&lt; p - s &lt;&lt; " ";
+			s[i] = '*';
+			nr++;
+		}
+	}
+
+	if (nr == 0)
+	    cout &lt;&lt; -1 &lt;&lt; " ";
+	cout &lt;&lt; s;
+
+	return 0;
+}
+    </pre>
+  </div>
+
+  <div class="problema">
+    <div class="enunt">
+8) Se citește un șir de caractere s și un număr natural k. Se construiește un șir nou prin concatenarea șirului s de k ori. În șirul rezultat, fiecare literă mare se transformă în literă mică, iar fiecare literă mică se transformă în literă mare. Se afișează șirul rezultat după această transformare.
+    </div>
+    <div class="exemplu">
+ex: aRc 3 => ArCArCArC
+    ARC 2 => arcarc
+    </div>
+    <pre>
+#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int main()
+{
+    char s[51], nou[256] = "";
+    int k;
+    cin &gt;&gt; s &gt;&gt; k;
+    for (int i = 0; i &lt; k; i++) {
+        strcat(nou, s);
+    }
+    for (int i = 0; i &lt; strlen(nou); i++) {
+        if (nou[i] &gt;= 'a' &amp;&amp; nou[i] &lt;= 'z') {
+            nou[i] = nou[i] - 'a' + 'A';
+        }
+        else if (nou[i] &gt;= 'A' &amp;&amp; nou[i] &lt;= 'Z') {
+            nou[i] = nou[i] - 'A' + 'a';
+        }
+    }
+    cout &lt;&lt; nou;
+
+    return 0;
+}
+    </pre>
+  </div>
+
+  <div class="problema">
+    <div class="enunt">
+9) Să se scrie un program care citește o propoziţie care este alcătuită din litere mici ale alfabetului englez și spații. Sa se afiseze cuvintele din propoziție, ordonate alfabetic, fiecare pe câte o linie.
+    </div>
+    <div class="exemplu">
+ex: dreptunghiul este un paralelogram cu un unghi drept 
+   => cu
+      drept
+      dreptunghiul
+      este
+      paralelogram
+      un
+      un
+      unghi
+    </div>
+    <pre>
+#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int main()
+{
+	int k = 0;
+	char s[251], v[100][21], *p;
+	cin.get(s, 251);
+	p=strtok(s," ");
+	while(p) {
+		strcpy(v[k], p);
+		k++;
+		p=strtok(NULL, " ");
+	}
+	for(int i = 0; i &lt; k - 1; i++)
+		for(int j = i + 1; j &lt; k; j++) {
+		   if(strcmp(v[i],v[j])&gt;0) {
+			char aux[21];
+			strcpy(aux,v[i]);
+			strcpy(v[i],v[j]);
+			strcpy(v[j],aux);
+			}
+		}
+	for(int i = 0; i &lt; k; i++)
+		cout &lt;&lt; v[i] &lt;&lt; endl;
+
+	return 0;
+}
+    </pre>
+  </div>
+
+  <div class="problema">
+    <div class="enunt">
+10) Se citește un cuvânt format din cel mult 50 de caractere, fără spații. Scrie un subprogram care verifică dacă acest cuvânt este palindrom. Programul va afișa "DA", dacă șirul este palindrom si "NU", în caz contrar.
+    </div>
+    <div class="exemplu">
+ex: 1. capac => DA
+    2. urs => NU
+    </div>
+    <pre>
+#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int palindrom(char s[]) {
+	int n = strlen(s);
+	for(int i = 0; i &lt; n / 2; i++)
+		if(s[i] != s[n - i - 1])
+			return 0;
+	return 1;
+}
+
+int main()
+{
+	char s[51];
+	cin &gt;&gt; s;
+	if(palindrom(s))
+		cout &lt;&lt; "DA";
+	else
+		cout &lt;&lt; "NU";
+
+	return 0;
+}
+    </pre>
+  </div>
+
+</main>
+</body>
+</html>
